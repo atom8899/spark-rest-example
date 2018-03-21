@@ -1,0 +1,8 @@
+version: 1.0
+port: 9000
+connection:
+  url: jdbc:h2:~/parking_database
+  port:
+  username: sa
+  password: sa
+
