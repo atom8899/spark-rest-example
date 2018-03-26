@@ -5,20 +5,30 @@ import com.fake_company.spark_rest_example.model.Rates;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.SQLException;
 
 public class ParkingH2Repository implements ParkingRepository {
+    private EntityManagerFactory emf = Persistence.createEntityManagerFactory("com.fake_company.spark_rest_example");
+    private EntityManager em;
 
-    private final DataSource dataSource;
+    public ParkingH2Repository(final ApplicationConfiguration applicationConfiguration) throws SQLException {
+        em = emf.createEntityManager();
+    }
 
-    public ParkingH2Repository(final ApplicationConfiguration applicationConfiguration) {
-        HikariConfig config = new HikariConfig();
-        config.setDataSourceClassName("org.h2.jdbcx.JdbcDataSource");
-        config.setConnectionTestQuery("VALUES 1");
-        config.addDataSourceProperty("URL", applicationConfiguration.getConnection().getUrl());
-        config.addDataSourceProperty("user", applicationConfiguration.getConnection().getUsername());
-        config.addDataSourceProperty("password", applicationConfiguration.getConnection().getPassword());
-        this.dataSource = new HikariDataSource(config);
+    public void init() throws SQLException {
+//        final Connection connection = dataSource.getConnection();
+//        connection.setAutoCommit(false);
+//        connection.prepareStatement("CREATE SCHEMA parking_example;\n" +
+//                "      CREATE TABLE parking_example.rates(\n" +
+//                "        days varchar(255),\n" +
+//                "        times varchar(255),\n" +
+//                "        rate int\n" +
+//                "      );").execute();
     }
 
     @Override
