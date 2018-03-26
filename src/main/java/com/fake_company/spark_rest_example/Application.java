@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import spark.Spark;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import static com.fake_company.spark_rest_example.configuration.ApplicationConfiguration.getConfiguration;
 import static spark.Spark.*;
@@ -34,16 +35,13 @@ public class Application {
         } catch (IOException e) {
             LOG.error(e.getMessage(), e);
             System.exit(3);
-        } catch (IllegalAccessException e) {
-            LOG.error(e.getMessage(), e);
+        } catch (SQLException e) {
+            e.printStackTrace();
             System.exit(4);
-        } catch (InstantiationException e) {
-            LOG.error(e.getMessage(), e);
-            System.exit(5);
         }
     }
 
-    public void run(final CommandLineArguments commandLineArguments) throws IOException, IllegalAccessException, InstantiationException {
+    public void run(final CommandLineArguments commandLineArguments) throws IOException, SQLException {
         final ApplicationConfiguration config = getConfiguration(commandLineArguments);
         final ParkingRepository parkingRepository = new ParkingH2Repository(config);
         // Build swagger json description

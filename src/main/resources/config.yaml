@@ -5,4 +5,12 @@ connection:
   port:
   username: sa
   password: sa
-
+database:
+  migrations:
+    create_schema:
+      CREATE SCHEMA parking_example;
+      CREATE TABLE parking_example.rates(
+        days varchar(255),
+        times varchar(255),
+        rate int
+      );

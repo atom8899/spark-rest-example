@@ -1,5 +1,6 @@
 package com.fake_company.spark_rest_example.model;
 
+import javax.persistence.Entity;
 import java.time.ZonedDateTime;
 
 public class Rates {
