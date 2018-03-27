@@ -1,7 +1,11 @@
 package com.fake_company.spark_rest_example.repository;
 
-import com.fake_company.spark_rest_example.model.Rates;
+import com.fake_company.spark_rest_example.model.Rate;
+
+import java.util.List;
 
 public interface ParkingRepository {
-    public Rates persistRate(final Rates rate);
+    public Rate persistRate(final Rate rate);
+
+    public List<Rate> getRates();
 }

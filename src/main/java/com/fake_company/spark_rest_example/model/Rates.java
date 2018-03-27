@@ -1,37 +1,36 @@
 package com.fake_company.spark_rest_example.model;
 
-import javax.persistence.Entity;
-import java.time.ZonedDateTime;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Spliterator;
+import java.util.function.Consumer;
 
-public class Rates {
+public class Rates implements Iterable<Rate> {
 
-    /**
-     * I'm sorry but I can't stand the fact that a "list" is being passed to me as a String. It's not proper JSON
-     */
-    private final String days;
-    /**
-     * I'm sorry but I can't stand the fact that a "list" is being passed to me as a String. It's not proper JSON
-     */
-    private final String times;
-    private final Integer price;
+    private List<Rate> rates;
 
-    public Rates(final String days, final String times, final Integer price) {
-        this.days = days;
-        this.times = times;
-        this.price = price;
+    public Rates(final List<Rate> rates) {
+        this.rates = rates;
     }
 
-    public String getDays() {
-        return days;
+    public Rates() { }
+
+    public List<Rate> getRates() {
+        return rates;
     }
 
-    public String getTimes() {
-        return times;
+    @Override
+    public Iterator<Rate> iterator() {
+        return rates.iterator();
     }
 
-    public Integer getPrice() {
-        return price;
+    @Override
+    public void forEach(Consumer<? super Rate> action) {
+        rates.forEach(action);
     }
 
-
+    @Override
+    public Spliterator<Rate> spliterator() {
+        return rates.spliterator();
+    }
 }

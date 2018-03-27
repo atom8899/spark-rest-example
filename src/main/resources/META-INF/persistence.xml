@@ -6,7 +6,7 @@
     <persistence-unit name="com.fake_company.spark_rest_example"
                       transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-        <class>com.fake_company.spark_rest_example.model.Rates</class>
+        <class>com.fake_company.spark_rest_example.model.Rate</class>
         <properties>
             <property name="javax.persistence.schema-generation.database.action"
                       value="drop-and-create" />

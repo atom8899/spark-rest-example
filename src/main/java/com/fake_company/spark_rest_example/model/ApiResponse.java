@@ -5,7 +5,7 @@ import com.google.gson.JsonElement;
 public class ApiResponse {
     private ResponseStatus status;
     private String message;
-    private JsonElement data;
+    private Object data;
 
     public ApiResponse(final ResponseStatus responseStatus) {
         this.status = responseStatus;
@@ -16,7 +16,7 @@ public class ApiResponse {
         this.message = message;
     }
 
-    public ApiResponse(final ResponseStatus responseStatus, final String message, JsonElement jsonElement) {
+    public ApiResponse(final ResponseStatus responseStatus, final String message, final Object jsonElement) {
         this(responseStatus);
         this.message = message;
         this.data = jsonElement;
@@ -30,7 +30,7 @@ public class ApiResponse {
         return message;
     }
 
-    enum ResponseStatus {
+    public enum ResponseStatus {
         Success,
         Failure
     }

@@ -3,9 +3,8 @@ package com.fake_company.spark_rest_example;
 import com.beust.jcommander.ParameterException;
 import com.fake_company.spark_rest_example.configuration.ApplicationConfiguration;
 import com.fake_company.spark_rest_example.configuration.CommandLineArguments;
-import com.fake_company.spark_rest_example.model.routes.CreateRateJsonRoute;
-import com.fake_company.spark_rest_example.model.routes.CreateRateXmlRoute;
-import com.fake_company.spark_rest_example.model.routes.EvaluateRateRoute;
+import com.fake_company.spark_rest_example.model.ApiResponse;
+import com.fake_company.spark_rest_example.model.routes.*;
 import com.fake_company.spark_rest_example.model.transformers.JsonResponseTransformer;
 import com.fake_company.spark_rest_example.model.transformers.XmlResponseTransformer;
 import com.fake_company.spark_rest_example.repository.ParkingH2Repository;
@@ -48,6 +47,8 @@ public class Application {
         port(commandLineArguments.getPort());
         path("/parking", () -> {
             get("/availability", new EvaluateRateRoute(parkingRepository));
+            get("/rates", "application/json", new GetRatesRoute(parkingRepository), new JsonResponseTransformer());
+            get("/rates", "application/xml", new GetRatesRoute(parkingRepository), new XmlResponseTransformer());
             path("/import", () -> {
                 post("/rates", "application/json", new CreateRateJsonRoute(parkingRepository), new JsonResponseTransformer());
                 post("/rates", "application/xml", new CreateRateXmlRoute(parkingRepository), new XmlResponseTransformer());
