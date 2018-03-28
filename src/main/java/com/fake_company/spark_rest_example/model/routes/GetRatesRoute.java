@@ -1,7 +1,7 @@
 package com.fake_company.spark_rest_example.model.routes;
 
 import com.fake_company.spark_rest_example.model.ApiResponse;
-import com.fake_company.spark_rest_example.model.Rates;
+import com.fake_company.spark_rest_example.model.rate.Rates;
 import com.fake_company.spark_rest_example.repository.ParkingRepository;
 import spark.Request;
 import spark.Response;

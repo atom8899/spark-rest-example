@@ -1,4 +1,4 @@
-package com.fake_company.spark_rest_example.model;
+package com.fake_company.spark_rest_example.model.rate;
 
 import java.util.Iterator;
 import java.util.List;

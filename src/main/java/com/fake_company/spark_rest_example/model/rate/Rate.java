@@ -1,13 +1,23 @@
-package com.fake_company.spark_rest_example.model;
+package com.fake_company.spark_rest_example.model.rate;
+
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
+import java.time.DayOfWeek;
+import java.time.LocalTime;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Entity
+@Cacheable
 @NamedQueries({
         @NamedQuery(name = "Rates.getAllRates",
                 query = "SELECT r FROM Rate r")
 })
+@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Rate {
 
 
@@ -66,6 +76,5 @@ public class Rate {
     public String getTimes() {
         return times;
     }
-
 
 }

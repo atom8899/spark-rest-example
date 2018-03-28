@@ -31,5 +31,6 @@ dependencies {
     compile group: 'org.hibernate', name: 'hibernate-entitymanager', version: '5.2.15.Final'
     compile group: 'org.hibernate', name: 'hibernate-hikaricp', version: '5.2.15.Final'
     compile group: 'org.hibernate', name: 'hibernate-core', version: '5.2.15.Final'
+    compile group: 'org.hibernate', name: 'hibernate-ehcache', version: '5.2.15.Final'
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }

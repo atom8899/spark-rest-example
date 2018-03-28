@@ -1,8 +1,8 @@
 package com.fake_company.spark_rest_example.model.routes;
 
 import com.fake_company.spark_rest_example.model.ApiResponse;
-import com.fake_company.spark_rest_example.model.Rate;
-import com.fake_company.spark_rest_example.model.Rates;
+import com.fake_company.spark_rest_example.model.rate.Rate;
+import com.fake_company.spark_rest_example.model.rate.Rates;
 import com.fake_company.spark_rest_example.repository.ParkingRepository;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
