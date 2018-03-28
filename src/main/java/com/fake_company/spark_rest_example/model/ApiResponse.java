@@ -7,6 +7,8 @@ public class ApiResponse {
     private String message;
     private Object data;
 
+    public ApiResponse() {}
+
     public ApiResponse(final ResponseStatus responseStatus) {
         this.status = responseStatus;
     }
@@ -28,6 +30,22 @@ public class ApiResponse {
 
     public String getMessage() {
         return message;
+    }
+
+    public void setStatus(ResponseStatus status) {
+        this.status = status;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public Object getData() {
+        return data;
+    }
+
+    public void setData(Object data) {
+        this.data = data;
     }
 
     public enum ResponseStatus {

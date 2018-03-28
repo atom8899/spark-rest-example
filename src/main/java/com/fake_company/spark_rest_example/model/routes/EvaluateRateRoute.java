@@ -2,24 +2,22 @@ package com.fake_company.spark_rest_example.model.routes;
 
 import com.fake_company.spark_rest_example.model.ApiResponse;
 import com.fake_company.spark_rest_example.model.rate.MaterializedRate;
-import com.fake_company.spark_rest_example.model.rate.Rate;
-import com.fake_company.spark_rest_example.repository.ParkingRepository;
+import com.fake_company.spark_rest_example.repository.RateRepository;
 import spark.QueryParamsMap;
 import spark.Request;
 import spark.Response;
 import spark.Route;
 
-import java.time.Period;
 import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class EvaluateRateRoute implements Route {
 
-    private final ParkingRepository parkingRepository;
+    private final RateRepository rateRepository;
 
-    public EvaluateRateRoute(final ParkingRepository parkingRepository) {
-        this.parkingRepository = parkingRepository;
+    public EvaluateRateRoute(final RateRepository rateRepository) {
+        this.rateRepository = rateRepository;
     }
 
     @Override
@@ -33,7 +31,8 @@ public class EvaluateRateRoute implements Route {
             throw new Exception("Please provide a valid Start and End time");
         }
 
-        final List<MaterializedRate> rates = parkingRepository.getMaterializedRates().stream().filter(r -> r.isWithinRate(startTime, endTime)).collect(Collectors.toList());
+        final List<MaterializedRate> rates = rateRepository.getMaterializedRates().stream().filter(r -> r.isWithinRate(startTime, endTime)).collect(Collectors.toList());
+        response.status(200);
         if(rates.isEmpty()) {
             return new ApiResponse(ApiResponse.ResponseStatus.Success, "Non Available");
         } else {

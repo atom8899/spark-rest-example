@@ -11,11 +11,11 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ParkingH2Repository implements ParkingRepository {
+public class RateH2Repository implements RateRepository {
     private EntityManagerFactory emf = Persistence.createEntityManagerFactory("com.fake_company.spark_rest_example");
     private EntityManager em;
 
-    public ParkingH2Repository(final ApplicationConfiguration applicationConfiguration) throws SQLException {
+    public RateH2Repository(final ApplicationConfiguration applicationConfiguration) throws SQLException {
         em = emf.createEntityManager();
     }
 
@@ -40,5 +40,12 @@ public class ParkingH2Repository implements ParkingRepository {
                 .stream()
                 .map(MaterializedRate::fromRate)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public void clearExistingRates() {
+        em.getTransaction().begin();
+        em.createNamedQuery("Rates.removeExistingRates").executeUpdate();
+        em.getTransaction().commit();
     }
 }

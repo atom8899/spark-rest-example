@@ -15,7 +15,9 @@ import java.util.stream.Stream;
 @Cacheable
 @NamedQueries({
         @NamedQuery(name = "Rates.getAllRates",
-                query = "SELECT r FROM Rate r")
+                query = "SELECT r FROM Rate r"),
+        @NamedQuery(name = "Rates.removeExistingRates",
+                query = "DELETE FROM Rate r")
 })
 @org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Rate {

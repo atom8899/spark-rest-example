@@ -3,12 +3,11 @@ package com.fake_company.spark_rest_example;
 import com.beust.jcommander.ParameterException;
 import com.fake_company.spark_rest_example.configuration.ApplicationConfiguration;
 import com.fake_company.spark_rest_example.configuration.CommandLineArguments;
-import com.fake_company.spark_rest_example.model.ApiResponse;
 import com.fake_company.spark_rest_example.model.routes.*;
 import com.fake_company.spark_rest_example.model.transformers.JsonResponseTransformer;
 import com.fake_company.spark_rest_example.model.transformers.XmlResponseTransformer;
-import com.fake_company.spark_rest_example.repository.ParkingH2Repository;
-import com.fake_company.spark_rest_example.repository.ParkingRepository;
+import com.fake_company.spark_rest_example.repository.RateH2Repository;
+import com.fake_company.spark_rest_example.repository.RateRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import spark.Spark;
@@ -42,16 +41,17 @@ public class Application {
 
     public void run(final CommandLineArguments commandLineArguments) throws IOException, SQLException {
         final ApplicationConfiguration config = getConfiguration(commandLineArguments);
-        final ParkingRepository parkingRepository = new ParkingH2Repository(config);
+        final RateRepository rateRepository = new RateH2Repository(config);
         // Build swagger json description
         port(commandLineArguments.getPort());
         path("/parking", () -> {
-            get("/availability", new EvaluateRateRoute(parkingRepository));
-            get("/rates", "application/json", new GetRatesRoute(parkingRepository), new JsonResponseTransformer());
-            get("/rates", "application/xml", new GetRatesRoute(parkingRepository), new XmlResponseTransformer());
+            get("/availability", "application/json", new EvaluateRateRoute(rateRepository), new JsonResponseTransformer());
+            get("/availability", "application/xml", new EvaluateRateRoute(rateRepository), new XmlResponseTransformer());
+            get("/rates", "application/json", new GetRatesRoute(rateRepository), new JsonResponseTransformer());
+            get("/rates", "application/xml", new GetRatesRoute(rateRepository), new XmlResponseTransformer());
             path("/import", () -> {
-                post("/rates", "application/json", new CreateRateJsonRoute(parkingRepository), new JsonResponseTransformer());
-                post("/rates", "application/xml", new CreateRateXmlRoute(parkingRepository), new XmlResponseTransformer());
+                post("/rates", "application/json", new CreateRateRoute(rateRepository), new JsonResponseTransformer());
+                post("/rates", "application/xml", new CreateRateRoute(rateRepository), new XmlResponseTransformer());
             });
         });
         Runtime.getRuntime().addShutdownHook(new Thread(Spark::stop));

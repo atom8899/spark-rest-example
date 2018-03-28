@@ -70,8 +70,8 @@ public class MaterializedRate {
 
     public boolean isWithinRate(final ZonedDateTime start, final ZonedDateTime end) {
         if(daysApplied.stream().anyMatch(d -> d == start.getDayOfWeek())) {
-            return (ZonedDateTime.from(startTime).isBefore(start) && ZonedDateTime.from(endTime).isAfter(end)) ||
-             (ZonedDateTime.from(startTime).isEqual(start) && ZonedDateTime.from(endTime).isEqual(end));
+            return LocalTime.of(start.getHour(), start.getMinute()).compareTo(startTime) >= 0
+            && LocalTime.of(end.getHour(), end.getMinute()).compareTo(endTime) <= 0;
         }
         return false;
     }
