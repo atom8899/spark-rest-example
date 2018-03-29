@@ -8,37 +8,6 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class MaterializedRate {
-    enum DateMapping {
-        mon("mon", DayOfWeek.MONDAY),
-        tues("tues", DayOfWeek.TUESDAY),
-        wed("wed", DayOfWeek.WEDNESDAY),
-        thurs("thurs", DayOfWeek.THURSDAY),
-        fri("fri", DayOfWeek.FRIDAY),
-        sat("sat", DayOfWeek.SATURDAY),
-        sun("sun", DayOfWeek.SUNDAY);
-
-        private String value;
-        private DayOfWeek day;
-
-        DateMapping(final String value, final DayOfWeek day) {
-            this.value = value;
-            this.day = day;
-        }
-
-        public String getValue() {
-            return value;
-        }
-
-        public Optional<DateMapping> parse(final String input) {
-            for (DateMapping dateMapping : DateMapping.values()) {
-                if (dateMapping.value.equalsIgnoreCase(input)) {
-                    return Optional.of(dateMapping);
-                }
-            }
-            return Optional.empty();
-        }
-    }
-
     private LocalTime startTime;
     private LocalTime endTime;
     private List<DayOfWeek> daysApplied;
@@ -82,7 +51,7 @@ public class MaterializedRate {
         final LocalTime endTime = LocalTime.parse(times[1], DateTimeFormatter.ofPattern("HHMM"));
         final Integer price = rate.getPrice();
         final List<DayOfWeek> daysApplied = Stream.of(rate.getDays().split(","))
-                .map(DateMapping::valueOf)
+                .map(WeekDayMapper::valueOf)
                 .map(o -> o.day)
                 .collect(Collectors.toList());
         return new MaterializedRate(startTime, endTime, daysApplied, price);

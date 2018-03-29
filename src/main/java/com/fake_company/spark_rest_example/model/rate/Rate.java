@@ -1,15 +1,11 @@
 package com.fake_company.spark_rest_example.model.rate;
 
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-
 import javax.persistence.*;
-import java.time.DayOfWeek;
-import java.time.LocalTime;
-import java.time.ZonedDateTime;
-import java.util.ArrayList;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Entity
 @Cacheable
@@ -24,15 +20,17 @@ public class Rate {
 
 
     private Integer id;
-    /**
-     * I'm sorry but I can't stand the fact that a "list" is being passed to me as a String. It's not proper JSON
-     */
+    @NotNull
+    @NotBlank
+    @Pattern(message = "must provide two times in the format HHMM-HHMM", regexp = "\\d\\d\\d\\d-\\d\\d\\d\\d")
     private String times;
+    @NotNull
     private Integer price;
-    /**
-     * I'm sorry but I can't stand the fact that a "list" is being passed to me as a String. It's not proper JSON
-     */
+    @NotNull
+    @NotBlank
+    @Pattern(message = "Accepted Values: mon,tues,weds,thurs,fri,sat,sun", regexp = "(mon|tues|wed|thurs|fri|sat|sun)")
     private String days;
+    private List<String> validations;
 
     public Rate(final String days, final String times, final Integer price) {
         this.days = days;
@@ -58,6 +56,14 @@ public class Rate {
         return days;
     }
 
+    public Integer getPrice() {
+        return price;
+    }
+
+    public String getTimes() {
+        return times;
+    }
+
     public void setDays(final String days) {
         this.days = days;
     }
@@ -70,13 +76,13 @@ public class Rate {
         this.price = price;
     }
 
-    public Integer getPrice() {
-        return price;
+    public void setValidations(final List<String> validations) {
+        this.validations = validations;
     }
 
-
-    public String getTimes() {
-        return times;
+    @Transient
+    public List<String> getValidations() {
+        return this.validations;
     }
 
 }

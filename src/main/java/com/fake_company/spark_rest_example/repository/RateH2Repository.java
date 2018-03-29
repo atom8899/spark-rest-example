@@ -1,6 +1,7 @@
 package com.fake_company.spark_rest_example.repository;
 
 import com.fake_company.spark_rest_example.configuration.ApplicationConfiguration;
+import com.fake_company.spark_rest_example.model.exception.InvalidRateException;
 import com.fake_company.spark_rest_example.model.rate.MaterializedRate;
 import com.fake_company.spark_rest_example.model.rate.Rate;
 
