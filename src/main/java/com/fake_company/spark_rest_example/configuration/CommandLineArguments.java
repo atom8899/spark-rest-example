@@ -8,15 +8,8 @@ import java.io.IOException;
 
 public class CommandLineArguments {
 
-    @Parameter(names = {"-c", "-config"}, description = "ApplicationConfiguration file location", required = true)
-    private String configFileLocation;
-
     @Parameter(names = {"-p", "-port"}, description = "Server Port", required = false)
     private Integer port = 9000;
-
-    public String getConfigFileLocation() {
-        return configFileLocation;
-    }
 
     public Integer getPort() {
         return port;
