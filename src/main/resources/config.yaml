@@ -1,16 +1,2 @@
 version: 1.0
 port: 9000
-connection:
-  url: jdbc:h2:~/parking_database
-  port:
-  username: sa
-  password: sa
-database:
-  migrations:
-    create_schema:
-      CREATE SCHEMA parking_example;
-      CREATE TABLE parking_example.rates(
-        days varchar(255),
-        times varchar(255),
-        rate int
-      );

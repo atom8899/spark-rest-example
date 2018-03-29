@@ -7,6 +7,9 @@ import spark.Request;
 import spark.Response;
 import spark.Route;
 
+/**
+ * Returns all existing rates in the system
+ */
 public class GetRatesRoute implements Route {
 
     private final RateRepository rateRepository;

@@ -1,9 +1,10 @@
 package com.fake_company.spark_rest_example;
 
 import com.beust.jcommander.ParameterException;
-import com.fake_company.spark_rest_example.configuration.ApplicationConfiguration;
 import com.fake_company.spark_rest_example.configuration.CommandLineArguments;
-import com.fake_company.spark_rest_example.model.routes.*;
+import com.fake_company.spark_rest_example.model.routes.CreateRateRoute;
+import com.fake_company.spark_rest_example.model.routes.EvaluateRateRoute;
+import com.fake_company.spark_rest_example.model.routes.GetRatesRoute;
 import com.fake_company.spark_rest_example.model.transformers.JsonResponseTransformer;
 import com.fake_company.spark_rest_example.model.transformers.XmlResponseTransformer;
 import com.fake_company.spark_rest_example.repository.RateH2Repository;
@@ -15,7 +16,6 @@ import spark.Spark;
 import java.io.IOException;
 import java.sql.SQLException;
 
-import static com.fake_company.spark_rest_example.configuration.ApplicationConfiguration.getConfiguration;
 import static spark.Spark.*;
 
 public class Application {
@@ -40,8 +40,7 @@ public class Application {
     }
 
     public void run(final CommandLineArguments commandLineArguments) throws IOException, SQLException {
-        final ApplicationConfiguration config = getConfiguration(commandLineArguments);
-        final RateRepository rateRepository = new RateH2Repository(config);
+        final RateRepository rateRepository = new RateH2Repository();
         // Build swagger json description
         port(commandLineArguments.getPort());
         path("/parking", () -> {
