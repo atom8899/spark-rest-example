@@ -39,9 +39,14 @@ public class Application {
         }
     }
 
+    /**
+     * Constructs the paths and establishes Routes
+     * @param commandLineArguments
+     * @throws IOException
+     * @throws SQLException
+     */
     public void run(final CommandLineArguments commandLineArguments) throws IOException, SQLException {
         final RateRepository rateRepository = new RateH2Repository();
-        // Build swagger json description
         port(commandLineArguments.getPort());
         path("/parking", () -> {
             get("/availability", "application/json", new EvaluateRateRoute(rateRepository), new JsonResponseTransformer());

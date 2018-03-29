@@ -8,6 +8,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+/**
+ * A rate representation easier to work with within the application.
+ * It's not intended to be exposed. Ideally I would have had the rate and this materialized view be the same but the json format
+ * was incompatible and transforming back and from from it would have added too much complexity to a simple app
+ */
 public class MaterializedRate {
     private LocalTime startTime;
     private LocalTime endTime;
