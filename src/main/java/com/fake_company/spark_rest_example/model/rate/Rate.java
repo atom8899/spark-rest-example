@@ -1,7 +1,11 @@
 package com.fake_company.spark_rest_example.model.rate;
 
+import com.fake_company.spark_rest_example.model.rate.validation.DayValidation;
+import com.fake_company.spark_rest_example.model.rate.validation.RateDayValidator;
+import com.fake_company.spark_rest_example.model.rate.validation.ValidDayOfWeek;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import javax.persistence.*;
+import javax.validation.Constraint;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -28,7 +32,7 @@ public class Rate {
     private Integer price;
     @NotNull
     @NotBlank
-    @Pattern(message = "Accepted Values: mon,tues,weds,thurs,fri,sat,sun", regexp = "(mon|tues|wed|thurs|fri|sat|sun)")
+    @ValidDayOfWeek(value = DayValidation.STRICT, message = "Must be a valid day of the week. Acceptable values: mon,tues,wed,thurs,fri,sat,sun")
     private String days;
     private List<String> validations;
 

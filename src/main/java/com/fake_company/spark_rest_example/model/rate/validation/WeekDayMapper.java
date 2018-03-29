@@ -1,4 +1,4 @@
-package com.fake_company.spark_rest_example.model.rate;
+package com.fake_company.spark_rest_example.model.rate.validation;
 
 import java.time.DayOfWeek;
 import java.util.Optional;

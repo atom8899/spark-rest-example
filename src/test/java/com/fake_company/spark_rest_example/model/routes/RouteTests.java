@@ -87,7 +87,7 @@ public class RouteTests {
         assertTrue(firstRate.getDays().equals("mon,january,thurs"));
         assertTrue(firstRate.getPrice().equals(9000));
         assertTrue(firstRate.getTimes().equals("9000-1000"));
-        assertTrue(firstRate.getValidations().get(0).contains("Accepted Values: mon,tues,weds,thurs,fri,sat,sun"));
+        assertTrue(firstRate.getValidations().get(0).contains("Must be a valid day of the week. Acceptable values: mon,tues,wed,thurs,fri,sat,sun"));
     }
 
     @Test
@@ -117,7 +117,7 @@ public class RouteTests {
         when(mockRequest.headers(HttpHeader.CONTENT_TYPE.asString())).thenReturn("application/json");
         when(mockRequest.body()).thenReturn("{\"rates\":[{\"times\":\"9000-1000\",\"days\":\"mon,tues,thurs\", \"price\":\"9000\"}]}");
         final ApiResponse apiResponse = (ApiResponse) createRoute.handle(mockRequest, mockResponse);
-        verify(mockResponse, times(1)).status(400);
+        verify(mockResponse, times(1)).status(200);
         ArgumentCaptor<Rate> rateCaptor = ArgumentCaptor.forClass(Rate.class);
         verify(mockRepository, times(1)).persistRate(rateCaptor.capture());
         final Rate firstRate = rateCaptor.getAllValues().get(0);
