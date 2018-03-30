@@ -15,7 +15,7 @@ import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
-public class RouteTests {
+public class CreateRateRouteTest {
 
     @Test
     public void CreateRateJsonRouteTest_failure_missing_price() throws Exception {
