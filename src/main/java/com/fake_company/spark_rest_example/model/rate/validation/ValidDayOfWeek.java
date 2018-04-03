@@ -17,7 +17,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Constraint(validatedBy = RateDayValidator.class)
 @Documented
 public @interface ValidDayOfWeek {
-    String message() default "{org.hibernate.validator.referenceguide.chapter06.CheckCase." +
+    String message() default "{com.fake_company.validator.day_validator." +
             "message}";
 
     Class<?>[] groups() default {};
