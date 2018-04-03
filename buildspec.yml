@@ -6,9 +6,9 @@ env:
 
 phases:
   pre_build:
-    gradle check
+    - gradle check
   install:
-    gralde shadowJar
+    - gradle shadowJar
 artifacts:
   files:
     - build/libs/spark-rest-example*.jar
