@@ -2,6 +2,7 @@ package com.fake_company.spark_rest_example;
 
 import com.beust.jcommander.ParameterException;
 import com.fake_company.spark_rest_example.configuration.CommandLineArguments;
+import com.fake_company.spark_rest_example.model.ApiResponse;
 import com.fake_company.spark_rest_example.model.routes.CreateRateRoute;
 import com.fake_company.spark_rest_example.model.routes.EvaluateRateRoute;
 import com.fake_company.spark_rest_example.model.routes.GetRatesRoute;
@@ -9,6 +10,7 @@ import com.fake_company.spark_rest_example.model.transformers.JsonResponseTransf
 import com.fake_company.spark_rest_example.model.transformers.XmlResponseTransformer;
 import com.fake_company.spark_rest_example.repository.RateH2Repository;
 import com.fake_company.spark_rest_example.repository.RateRepository;
+import com.google.gson.Gson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import spark.Spark;
@@ -57,6 +59,15 @@ public class Application {
                 post("/rates", "application/json", new CreateRateRoute(rateRepository), new JsonResponseTransformer());
                 post("/rates", "application/xml", new CreateRateRoute(rateRepository), new XmlResponseTransformer());
             });
+        });
+        notFound((request, response) -> {
+            response.type("application/json");
+            return new Gson().toJson(new ApiResponse(ApiResponse.ResponseStatus.Failure, "Route not found"));
+
+        });
+        internalServerError((req, res) -> {
+            res.type("application/json");
+            return new Gson().toJson(new ApiResponse(ApiResponse.ResponseStatus.Failure, "Internal System Error Occurred. Please try again later ... "));
         });
         Runtime.getRuntime().addShutdownHook(new Thread(Spark::stop));
     }
