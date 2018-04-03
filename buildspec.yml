@@ -1,0 +1,14 @@
+version: 0.2
+
+env:
+  variables:
+    project_version: "1.0-SNAPSHOT"
+
+phases:
+  pre_build:
+    gradle check
+  install:
+    gralde shadowJar
+artifacts:
+  files:
+    - build/libs/spark-rest-example*.jar
