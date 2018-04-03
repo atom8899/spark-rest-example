@@ -12,6 +12,46 @@ jar {
     }
 }
 
+sourceSets {
+    integrationTest {
+        java {
+            compileClasspath += main.output + test.output
+            runtimeClasspath += main.output + test.output
+            srcDir file('src/integration-test/java')
+        }
+        resources.srcDir file('src/integration-test/resources')
+        dependencies {
+            integrationTestCompile sourceSets.main.output
+            integrationTestCompile sourceSets.test.output
+
+            integrationTestCompile configurations.compile
+            integrationTestCompile configurations.testCompile
+
+            integrationTestRuntime configurations.runtime
+            integrationTestRuntime configurations.testRuntime
+        }
+    }
+}
+
+task integrationTests(type: Test) {
+    group = LifecycleBasePlugin.VERIFICATION_GROUP
+    description = "Runs Integration Tests"
+
+    maxHeapSize = '2048m'
+
+    testClassesDir = sourceSets.integrationTest.output.classesDir
+    classpath = sourceSets.integrationTest.runtimeClasspath
+
+    binResultsDir = file("$buildDir/integration-tests/binary/integrationTest")
+
+    reports {
+        html.destination = "$buildDir/reports/integration-test"
+        junitXml.destination = "$buildDir/integration-test-results"
+    }
+}
+
+check.dependsOn integrationTests
+
 group 'spark-rest-example'
 version '1.0-SNAPSHOT'
 

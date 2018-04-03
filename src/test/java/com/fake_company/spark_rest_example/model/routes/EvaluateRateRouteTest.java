@@ -32,6 +32,7 @@ public class EvaluateRateRouteTest {
         when(startQueryParamsMap.value()).thenReturn("2015-07-01T07:00:00Z");
         when(endQueryParamsMap.value()).thenReturn("2015-07-01T12:00:00Z");
         final MaterializedRate mockMaterializedRate = mock(MaterializedRate.class);
+        when(mockMaterializedRate.getPrice()).thenReturn(1000);
         when(mockRepo.getMaterializedRates()).thenReturn(Lists.newArrayList(mockMaterializedRate));
         when(mockMaterializedRate.isWithinRate(any(ZonedDateTime.class), any(ZonedDateTime.class))).thenReturn(true);
         final ApiResponse apiResponse = (ApiResponse) new EvaluateRateRoute(mockRepo).handle(mockRequest, mockResponse);
