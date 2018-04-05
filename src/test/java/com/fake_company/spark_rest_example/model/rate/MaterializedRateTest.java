@@ -46,4 +46,16 @@ public class MaterializedRateTest {
         final ZonedDateTime end = ZonedDateTime.parse("2016-01-01T10:00:00Z");
         assertFalse(materializedRate.isWithinRate(start, end));
     }
+
+    @Test
+    public void test_within_bounds_failure_starts_after() {
+        MaterializedRate materializedRate = new MaterializedRate(
+                LocalTime.parse("0600", DateTimeFormatter.ofPattern("HHMM")),
+                LocalTime.parse("1100", DateTimeFormatter.ofPattern("HHMM")),
+                Lists.newArrayList(DayOfWeek.FRIDAY), 1000);
+        final ZonedDateTime start = ZonedDateTime.parse("2016-01-01T12:00:00Z");
+        final ZonedDateTime end = ZonedDateTime.parse("2016-01-01T13:00:00Z");
+        assertFalse(materializedRate.isWithinRate(start, end));
+    }
+
 }
