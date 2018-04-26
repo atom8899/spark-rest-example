@@ -4,8 +4,6 @@ import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
 import com.beust.jcommander.ParameterException;
 
-import java.io.IOException;
-
 public class CommandLineArguments {
 
     @Parameter(names = {"-p", "-port"}, description = "Server Port", required = false)
@@ -16,8 +14,8 @@ public class CommandLineArguments {
     }
 
     public static CommandLineArguments parse(final String[] args) {
-        final CommandLineArguments commandLineArguments = new CommandLineArguments();
-        final JCommander jCommander = JCommander.newBuilder()
+        final var commandLineArguments = new CommandLineArguments();
+        final var jCommander = JCommander.newBuilder()
                 .addObject(commandLineArguments)
                 .build();
         try {
