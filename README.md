@@ -1,5 +1,6 @@
 # spark-rest-example
 
+MOVED TO -> https://gitlab.com/austent89/spark-rest-example
 
 ## Build
 
