@@ -1,7 +1,5 @@
 package com.fake_company.spark_rest_example.model;
 
-import com.google.gson.JsonElement;
-
 public class ApiResponse {
     private ResponseStatus status;
     private String message;

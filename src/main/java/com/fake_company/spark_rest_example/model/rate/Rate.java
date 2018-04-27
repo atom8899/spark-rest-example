@@ -1,11 +1,9 @@
 package com.fake_company.spark_rest_example.model.rate;
 
 import com.fake_company.spark_rest_example.model.rate.validation.DayValidation;
-import com.fake_company.spark_rest_example.model.rate.validation.RateDayValidator;
 import com.fake_company.spark_rest_example.model.rate.validation.ValidDayOfWeek;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import javax.persistence.*;
-import javax.validation.Constraint;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;

@@ -1,8 +1,5 @@
 package com.fake_company.spark_rest_example.model.rate.validation;
 
-import com.fake_company.spark_rest_example.model.rate.Rate;
-
-import javax.validation.Constraint;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import java.util.Optional;

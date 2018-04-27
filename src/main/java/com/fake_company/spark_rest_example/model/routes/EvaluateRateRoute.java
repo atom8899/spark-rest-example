@@ -29,17 +29,17 @@ public class EvaluateRateRoute implements Route {
     @Override
     public Object handle(final Request request, final Response response) throws Exception {
         try {
-            final QueryParamsMap queryStartParamsMap = request.queryMap("start_time");
-            final QueryParamsMap queryEndParamsMap = request.queryMap("end_time");
+            final var queryStartParamsMap = request.queryMap("start_time");
+            final var queryEndParamsMap = request.queryMap("end_time");
             if (queryStartParamsMap.hasValue() && queryEndParamsMap.hasValue()) {
-                final ZonedDateTime startTime = ZonedDateTime.parse(queryStartParamsMap.value());
-                final ZonedDateTime endTime = ZonedDateTime.parse(queryEndParamsMap.value());
+                final var startTime = ZonedDateTime.parse(queryStartParamsMap.value());
+                final var endTime = ZonedDateTime.parse(queryEndParamsMap.value());
 
                 if (startTime.isAfter(endTime)) {
                     throw new Exception("Please provide a valid Start and End time");
                 }
 
-                final List<MaterializedRate> rates = rateRepository.getMaterializedRates().stream().filter(r -> r.isWithinRate(startTime, endTime)).collect(Collectors.toList());
+                final var rates = rateRepository.getMaterializedRates().stream().filter(r -> r.isWithinRate(startTime, endTime)).collect(Collectors.toList());
                 response.status(200);
                 if (rates.isEmpty()) {
                     return new ApiResponse(ApiResponse.ResponseStatus.Success, "None Available");

@@ -1,6 +1,5 @@
 package com.fake_company.spark_rest_example;
 
-import com.beust.jcommander.ParameterException;
 import com.fake_company.spark_rest_example.configuration.CommandLineArguments;
 import com.fake_company.spark_rest_example.model.ApiResponse;
 import com.fake_company.spark_rest_example.model.routes.CreateRateRoute;
@@ -11,44 +10,33 @@ import com.fake_company.spark_rest_example.model.transformers.XmlResponseTransfo
 import com.fake_company.spark_rest_example.repository.RateH2Repository;
 import com.fake_company.spark_rest_example.repository.RateRepository;
 import com.google.gson.Gson;
+import com.google.gson.stream.MalformedJsonException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import spark.Spark;
-
-import java.io.IOException;
-import java.sql.SQLException;
 
 import static spark.Spark.*;
 
 public class Application {
     final private static Logger LOG = LoggerFactory.getLogger(Application.class);
-    final private static String APP_PACKAGE = "com.fake_company.spark_rest_example";
 
     public static void main(final String[] args) {
         try {
-            final Application main = new Application();
-            final CommandLineArguments commandLineArguments = CommandLineArguments.parse(args);
+            final var main = new Application();
+            final var commandLineArguments = CommandLineArguments.parse(args);
             main.run(commandLineArguments);
-        } catch (ParameterException pe) {
-            LOG.error(pe.getMessage());
-            System.exit(2);
-        } catch (IOException e) {
-            LOG.error(e.getMessage(), e);
-            System.exit(3);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            System.exit(4);
+        } catch (Throwable t) {
+            LOG.error(t.getMessage(), t);
+            System.exit(1);
         }
     }
 
     /**
      * Constructs the paths and establishes Routes
      * @param commandLineArguments
-     * @throws IOException
-     * @throws SQLException
      */
-    public void run(final CommandLineArguments commandLineArguments) throws IOException, SQLException {
-        final RateRepository rateRepository = new RateH2Repository();
+    public void run(final CommandLineArguments commandLineArguments) {
+        final RateRepository rateRepository = RateH2Repository.getInstance();
         port(commandLineArguments.getPort());
         path("/parking", () -> {
             get("/availability", "application/json", new EvaluateRateRoute(rateRepository), new JsonResponseTransformer());
@@ -65,11 +53,19 @@ public class Application {
             return new Gson().toJson(new ApiResponse(ApiResponse.ResponseStatus.Failure, "Route not found"));
 
         });
+        exception(MalformedJsonException.class, (exception, request, response) -> {
+            response.type("application/json");
+            response.body(new Gson().toJson(new ApiResponse(ApiResponse.ResponseStatus.Failure, "Malformed JSON", exception.getMessage())));
+        });
         internalServerError((req, res) -> {
             res.type("application/json");
             return new Gson().toJson(new ApiResponse(ApiResponse.ResponseStatus.Failure, "Internal System Error Occurred. Please try again later ... "));
         });
         Runtime.getRuntime().addShutdownHook(new Thread(Spark::stop));
+    }
+
+    public void shutdown() {
+        Spark.stop();
     }
 
 }

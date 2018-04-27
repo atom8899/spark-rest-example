@@ -10,11 +10,17 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class RateH2Repository implements RateRepository {
-    private EntityManagerFactory emf = Persistence.createEntityManagerFactory("com.fake_company.spark_rest_example");
-    private EntityManager em;
+    private final static RateH2Repository INSTANCE = new RateH2Repository();
+    private final EntityManager em;
 
-    public RateH2Repository() {
+
+    private RateH2Repository() {
+        var emf = Persistence.createEntityManagerFactory("com.fake_company.spark_rest_example");
         em = emf.createEntityManager();
+    }
+
+    public static RateH2Repository getInstance() {
+        return INSTANCE;
     }
 
     @Override

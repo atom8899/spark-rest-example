@@ -52,11 +52,11 @@ public class MaterializedRate {
     }
 
     public static MaterializedRate fromRate(final Rate rate) {
-        final String[] times = rate.getTimes().split("-");
-        final LocalTime startTime = LocalTime.parse(times[0], DateTimeFormatter.ofPattern("HHMM"));
-        final LocalTime endTime = LocalTime.parse(times[1], DateTimeFormatter.ofPattern("HHMM"));
-        final Integer price = rate.getPrice();
-        final List<DayOfWeek> daysApplied = Stream.of(rate.getDays().split(","))
+        final var times = rate.getTimes().split("-");
+        final var startTime = LocalTime.parse(times[0], DateTimeFormatter.ofPattern("HHMM"));
+        final var endTime = LocalTime.parse(times[1], DateTimeFormatter.ofPattern("HHMM"));
+        final var price = rate.getPrice();
+        final var daysApplied = Stream.of(rate.getDays().split(","))
                 .map(WeekDayMapper::valueOf)
                 .map(o -> o.day)
                 .collect(Collectors.toList());

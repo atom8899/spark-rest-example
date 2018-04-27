@@ -25,7 +25,7 @@ public enum WeekDayMapper {
     }
 
     public static Optional<WeekDayMapper> parse(final String input) {
-        for (WeekDayMapper dateMapping : WeekDayMapper.values()) {
+        for (var dateMapping : WeekDayMapper.values()) {
             if (dateMapping.value.equalsIgnoreCase(input)) {
                 return Optional.of(dateMapping);
             }
